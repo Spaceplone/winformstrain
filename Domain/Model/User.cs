@@ -8,6 +8,9 @@ namespace Domain.Model
 {
     public class User
     {//todo: enhance user with address (Normalized)
+
+        public Guid Id { get; set; }
+
         string name;
 
         DateOnly dateOfBirth;

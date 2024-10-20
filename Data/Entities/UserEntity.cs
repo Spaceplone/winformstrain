@@ -5,7 +5,7 @@ namespace Data.Entities
     public class UserEntity
     {//todo: enhance user with address (Normalized)
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         string name;
 

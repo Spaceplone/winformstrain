@@ -1,5 +1,8 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using Data;
 
 namespace winformstrain
 {
@@ -19,12 +22,27 @@ namespace winformstrain
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
+
+            var services = new ServiceCollection();
+            ConfigureServices(services);
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            Application.Run(serviceProvider.GetRequiredService<Form1>());
         }
 
-        private static void ConfigureServices(Servicecolle)
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddDbContext<UserManagementDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<Form1>();
+
+        }
     }
 }
