@@ -34,7 +34,7 @@ namespace winformstrain
             Application.Run(serviceProvider.GetRequiredService<Form1>());
         }
 
-        private static void ConfigureServices(ServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Configuration);
 
